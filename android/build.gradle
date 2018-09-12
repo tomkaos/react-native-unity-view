@@ -33,4 +33,5 @@ android {
 dependencies {
     compile project(':UnityExport')
     compile 'com.facebook.react:react-native:+'
+    implementation files('../../../android/UnityExport/libs/unity-classes.jar')
 }
