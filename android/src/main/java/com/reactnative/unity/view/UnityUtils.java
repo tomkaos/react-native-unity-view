@@ -31,6 +31,8 @@ public class UnityUtils {
         return unityPlayer != null;
     }
 
+    public static boolean isUnityPaused = false;
+
     public static void createPlayer(Context context) {
         if (unityPlayer != null) {
             return;
@@ -113,5 +115,6 @@ public class UnityUtils {
         unityPlayer.windowFocusChanged(true);
         unityPlayer.requestFocus();
         unityPlayer.resume();
+        isUnityPaused = false;
     }
 }

@@ -26,8 +26,6 @@ public class UnityViewManager extends SimpleViewManager<UnityView> implements Li
     public static final int COMMAND_PAUSE = 2;
     public static final int COMMAND_RESUME = 3;
 
-    private static boolean DONOT_RESUME = false;
-
     private ReactApplicationContext context;
 
     UnityViewManager(ReactApplicationContext context) {
@@ -61,11 +59,11 @@ public class UnityViewManager extends SimpleViewManager<UnityView> implements Li
                 break;
             case COMMAND_PAUSE:
                 UnityUtils.getPlayer().pause();
-                DONOT_RESUME = true;
+                UnityUtils.isUnityPaused = true;
                 break;
             case COMMAND_RESUME:
                 UnityUtils.getPlayer().resume();
-                DONOT_RESUME = false;
+                UnityUtils.isUnityPaused = false;
                 break;                
         }
     }
@@ -97,7 +95,7 @@ public class UnityViewManager extends SimpleViewManager<UnityView> implements Li
         if (!UnityUtils.hasUnityPlayer()) {
             UnityUtils.createPlayer(context.getCurrentActivity());
         } else {
-            if (!DONOT_RESUME) {
+            if (!UnityUtils.isUnityPaused) {
                 UnityUtils.getPlayer().resume();
             }
         }
@@ -106,6 +104,7 @@ public class UnityViewManager extends SimpleViewManager<UnityView> implements Li
     @Override
     public void onHostPause() {
         UnityUtils.getPlayer().pause();
+        UnityUtils.isUnityPaused = true;
     }
 
     @Override
@@ -116,7 +115,8 @@ public class UnityViewManager extends SimpleViewManager<UnityView> implements Li
     @Override
     public void onViewAttachedToWindow(View v) {
         // restore the unity player state
-        if (DONOT_RESUME) {
+
+        if (UnityUtils.isUnityPaused) {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -125,6 +125,7 @@ public class UnityViewManager extends SimpleViewManager<UnityView> implements Li
                 }
             }, 300); //TODO: 300 is the right one?
         }
+
     }
 
     @Override
