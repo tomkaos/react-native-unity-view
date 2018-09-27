@@ -95,7 +95,7 @@ public class UnityViewManager extends SimpleViewManager<UnityView> implements Li
         if (!UnityUtils.hasUnityPlayer()) {
             UnityUtils.createPlayer(context.getCurrentActivity());
         } else {
-            if (!UnityUtils.isUnityPaused) {
+            if (UnityUtils.isUnityPaused) {
                 UnityUtils.getPlayer().resume();
             }
         }
