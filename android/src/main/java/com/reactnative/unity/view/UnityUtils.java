@@ -79,10 +79,15 @@ public class UnityUtils {
      * Invoke by unity C#
      */
     public static void onUnityMessage(String message) {
-        for (UnityEventListener listener : mUnityEventListeners) {
-            try {
-                listener.onMessage(message);
-            } catch (Exception e) {
+        if (message.contains("SELF_PAUSE")){
+            unityPlayer.pause();
+            isUnityPaused = false;
+        } else {
+            for (UnityEventListener listener : mUnityEventListeners) {
+                try {
+                    listener.onMessage(message);
+                } catch (Exception e) {
+                }
             }
         }
     }
