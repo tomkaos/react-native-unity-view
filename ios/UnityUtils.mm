@@ -82,8 +82,14 @@ static NSHashTable* mUnityEventListeners = [NSHashTable weakObjectsHashTable];
 
 extern "C" void onUnityMessage(const char* message)
 {
-    for (id<UnityEventListener> listener in mUnityEventListeners) {
-        [listener onMessage:[NSString stringWithUTF8String:message]];
+    NSString *messageStr = [NSString stringWithUTF8String:message];
+
+    if ([messageStr containsString:@"SELF_PAUSE"]){
+        UnityPauseCommand();
+    } else {
+        for (id<UnityEventListener> listener in mUnityEventListeners) {
+            [listener onMessage:messageStr];
+        }
     }
 }
 
