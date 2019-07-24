@@ -17,12 +17,16 @@ RCT_EXPORT_MODULE(UnityView)
 
 - (UIView *)view
 {
+    NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.view");
     self.currentView = [[RNUnityView alloc] init];
     if ([UnityUtils isUnityReady]) {
+        NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.view, unity is ready so about to call setUnityView");
         [self.currentView setUnityView: [GetAppController() unityView]];
     } else {
+        NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.view, unity is not ready so about to call createPlayer");
         [UnityUtils createPlayer:^{
-            [self.currentView setUnityView: [GetAppController() unityView]];
+            NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.view, in createPlayer callback, about to call setUnityView");
+        [self.currentView setUnityView: [GetAppController() unityView]];
         }];
     }
     return self.currentView;
@@ -39,11 +43,13 @@ RCT_EXPORT_MODULE(UnityView)
 }
 
 - (void)setBridge:(RCTBridge *)bridge {
-    _bridge = bridge;
+     NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.setBridge");
+   _bridge = bridge;
 }
 
 RCT_EXPORT_METHOD(postMessage:(nonnull NSNumber *)reactTag gameObject:(NSString *)gameObject methodName:(NSString *)methodName message:(NSString *)message)
 {
+     NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.postMessage");
     UnityPostMessage(gameObject, methodName, message);
 }
 
