@@ -20,6 +20,7 @@ void UnityInitTrampoline();
 
 extern "C" void InitArgs(int argc, char* argv[])
 {
+      NSLog(@"UUUUUUUUUUUU In UnityUtils.InitArgs");
     g_argc = argc;
     g_argv = argv;
 }
@@ -31,22 +32,23 @@ extern "C" bool UnityIsInited()
 
 extern "C" void InitUnity()
 {
+    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.InitUnity");
     if (unity_inited) {
         return;
     }
     unity_inited = true;
 
     UnityInitStartupTime();
-    
+
     @autoreleasepool
     {
         UnityInitTrampoline();
         UnityInitRuntime(g_argc, g_argv);
-        
+
         RegisterMonoModules();
         NSLog(@"-> registered mono modules %p\n", &constsection);
         RegisterFeatures();
-        
+
         // iOS terminates open sockets when an application enters background mode.
         // The next write to any of such socket causes SIGPIPE signal being raised,
         // even if the request has been done from scripting side. This disables the
@@ -62,6 +64,7 @@ extern "C" void UnityPostMessage(NSString* gameObject, NSString* methodName, NSS
 
 extern "C" void UnityPauseCommand()
 {
+   //   NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityPauseCommand");
     dispatch_async(dispatch_get_main_queue(), ^{
         UnityPause(1);
     });
@@ -69,6 +72,7 @@ extern "C" void UnityPauseCommand()
 
 extern "C" void UnityResumeCommand()
 {
+    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityResumeCommand");
     dispatch_async(dispatch_get_main_queue(), ^{
         UnityPause(0);
     });
@@ -86,13 +90,14 @@ static BOOL _isUnityReady = NO;
 
 + (void)handleAppStateDidChange:(NSNotification *)notification
 {
+    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.handleAppStateDidChange");
     if (!_isUnityReady) {
         return;
     }
     UnityAppController* unityAppController = GetAppController();
-    
+
     UIApplication* application = [UIApplication sharedApplication];
-    
+
     if ([notification.name isEqualToString:UIApplicationWillResignActiveNotification]) {
         [unityAppController applicationWillResignActive:application];
     } else if ([notification.name isEqualToString:UIApplicationDidEnterBackgroundNotification]) {
@@ -116,7 +121,7 @@ static BOOL _isUnityReady = NO;
                              UIApplicationWillResignActiveNotification,
                              UIApplicationWillEnterForegroundNotification,
                              UIApplicationDidReceiveMemoryWarningNotification]) {
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleAppStateDidChange:)
                                                      name:name
@@ -126,38 +131,51 @@ static BOOL _isUnityReady = NO;
 
 + (void)createPlayer:(void (^)(void))completed
 {
-    if (_isUnityReady) {
+    // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer");
+   if (_isUnityReady) {
+    // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer, unity is ready already so returning");
         completed();
         return;
     }
-    
+
+   //  NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer, unity is not ready, calling addObserverForName");
     [[NSNotificationCenter defaultCenter] addObserverForName:@"UnityReady" object:nil queue:[NSOperationQueue mainQueue]  usingBlock:^(NSNotification * _Nonnull note) {
+    // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer UnityReady callback, about to set UnityReady");
         _isUnityReady = YES;
         completed();
     }];
-    
+
     if (UnityIsInited()) {
-        return;
+    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is inited, returning");
+       return;
     }
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
+
+     //   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited");
+  dispatch_async(dispatch_get_main_queue(), ^{
         UIApplication* application = [UIApplication sharedApplication];
-        
+
         // Always keep RN window in top
         application.keyWindow.windowLevel = UIWindowLevelNormal + 1;
-        
-        InitUnity();
-        
+
+      //   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, about to call InitUnity");
+       InitUnity();
+      //   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, called InitUnity");
+
         UnityAppController *controller = GetAppController();
         [controller application:application didFinishLaunchingWithOptions:nil];
         [controller applicationDidBecomeActive:application];
-        
+
         [UnityUtils listenAppState];
+
+    // call completed callback
+   // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer called InitUnity async but calling completed() now");
+    completed();
     });
 }
 
 extern "C" void onUnityMessage(const char* message)
 {
+   //  NSLog(@"UUUUUUUUUUUU In UnityUtils.onUnityMessage");
     for (id<UnityEventListener> listener in mUnityEventListeners) {
         [listener onMessage:[NSString stringWithUTF8String:message]];
     }
@@ -165,7 +183,8 @@ extern "C" void onUnityMessage(const char* message)
 
 + (void)addUnityEventListener:(id<UnityEventListener>)listener
 {
-    [mUnityEventListeners addObject:listener];
+    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.addUnityEventListener");
+   [mUnityEventListeners addObject:listener];
 }
 
 + (void)removeUnityEventListener:(id<UnityEventListener>)listener

@@ -8,12 +8,12 @@ import { UnityModule, UnityViewMessage } from "./UnityModule";
 const { UIManager } = NativeModules;
 
 export interface UnityViewProps extends ViewProperties {
-    /** 
-     * Receive string message from unity. 
+    /**
+     * Receive string message from unity.
      */
     onMessage?: (message: string) => void;
-    /** 
-     * Receive unity message from unity. 
+    /**
+     * Receive unity message from unity.
      */
     onUnityMessage?: (handler: MessageHandler) => void;
 }
@@ -31,6 +31,7 @@ export default class UnityView extends React.Component<UnityViewProps> {
     }
 
     public componentWillMount() {
+       // console.log("UUUUUUUUUU In UnityView.componentWillMount, UnityModule: " + UnityModule);
         this.handle = UnityModule.addMessageListener(message => {
             if (this.props.onUnityMessage && message instanceof MessageHandler) {
                 this.props.onUnityMessage(message);
@@ -63,6 +64,7 @@ export default class UnityView extends React.Component<UnityViewProps> {
      * [Deprecated] Use `UnityModule.postMessage` instead.
      */
     public postMessage(gameObject: string, methodName: string, message: string) {
+       // console.log("UUUUUUUUUU In UnityView.postMessage, message: " + message);
         UnityModule.postMessage(gameObject, methodName, message);
     };
 
@@ -70,6 +72,7 @@ export default class UnityView extends React.Component<UnityViewProps> {
      * [Deprecated] Use `UnityModule.postMessageToUnityManager` instead.
      */
     public postMessageToUnityManager(message: string | UnityViewMessage) {
+        // console.log("UUUUUUUUUU In UnityView.postMessageToUnityManager, message: " + message);
         UnityModule.postMessageToUnityManager(message);
     };
 

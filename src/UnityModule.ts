@@ -122,14 +122,17 @@ class UnityModuleImpl implements UnityModule {
     }
 
     public async isReady() {
+      //  console.log("UUUUUUUUUU In UnityModuleImpl.isReady");
         return UnityNativeModule.isReady();
     }
 
     public async createUnity() {
+       // console.log("UUUUUUUUUU In UnityModuleImpl.createUnity");
         return UnityNativeModule.createUnity();
     }
 
     public postMessageToUnityManager(message: string | UnityViewMessage) {
+        // console.log("UUUUUUUUUU In UnityModuleImpl.postMessageToUnityManager, message: " + message);
         if (typeof message === 'string') {
             this.postMessage('UnityMessageManager', 'onMessage', message);
         } else {
@@ -147,6 +150,7 @@ class UnityModuleImpl implements UnityModule {
     }
 
     public postMessage(gameObject: string, methodName: string, message: string) {
+      //  console.log("UUUUUUUUUU In UnityModuleImpl.postMessage, message: " + message);
         UnityNativeModule.postMessage(gameObject, methodName, message);
     }
 
