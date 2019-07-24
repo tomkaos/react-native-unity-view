@@ -41,7 +41,7 @@ var UnityView = /** @class */ (function (_super) {
     }
     UnityView.prototype.componentWillMount = function () {
         var _this = this;
-        console.log("UUUUUUUUUU In UnityView.componentWillMount, UnityModule: " + UnityModule_1.UnityModule);
+        // console.log("UUUUUUUUUU In UnityView.componentWillMount, UnityModule: " + UnityModule);
         this.handle = UnityModule_1.UnityModule.addMessageListener(function (message) {
             if (_this.props.onUnityMessage && message instanceof MessageHandler_1["default"]) {
                 _this.props.onUnityMessage(message);
@@ -72,7 +72,7 @@ var UnityView = /** @class */ (function (_super) {
      * [Deprecated] Use `UnityModule.postMessage` instead.
      */
     UnityView.prototype.postMessage = function (gameObject, methodName, message) {
-        console.log("UUUUUUUUUU In UnityView.postMessage, message: " + message);
+        // console.log("UUUUUUUUUU In UnityView.postMessage, message: " + message);
         UnityModule_1.UnityModule.postMessage(gameObject, methodName, message);
     };
     ;
@@ -80,7 +80,7 @@ var UnityView = /** @class */ (function (_super) {
      * [Deprecated] Use `UnityModule.postMessageToUnityManager` instead.
      */
     UnityView.prototype.postMessageToUnityManager = function (message) {
-        console.log("UUUUUUUUUU In UnityView.postMessageToUnityManager, message: " + message);
+        // console.log("UUUUUUUUUU In UnityView.postMessageToUnityManager, message: " + message);
         UnityModule_1.UnityModule.postMessageToUnityManager(message);
     };
     ;

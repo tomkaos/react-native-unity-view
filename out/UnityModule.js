@@ -94,7 +94,7 @@ var UnityModuleImpl = /** @class */ (function () {
     UnityModuleImpl.prototype.isReady = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                console.log("UUUUUUUUUU In UnityModuleImpl.isReady");
+                //  console.log("UUUUUUUUUU In UnityModuleImpl.isReady");
                 return [2 /*return*/, UnityNativeModule.isReady()];
             });
         });
@@ -102,13 +102,13 @@ var UnityModuleImpl = /** @class */ (function () {
     UnityModuleImpl.prototype.createUnity = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                console.log("UUUUUUUUUU In UnityModuleImpl.createUnity");
+                // console.log("UUUUUUUUUU In UnityModuleImpl.createUnity");
                 return [2 /*return*/, UnityNativeModule.createUnity()];
             });
         });
     };
     UnityModuleImpl.prototype.postMessageToUnityManager = function (message) {
-        console.log("UUUUUUUUUU In UnityModuleImpl.postMessageToUnityManager, message: " + message);
+        // console.log("UUUUUUUUUU In UnityModuleImpl.postMessageToUnityManager, message: " + message);
         if (typeof message === 'string') {
             this.postMessage('UnityMessageManager', 'onMessage', message);
         }
@@ -126,7 +126,7 @@ var UnityModuleImpl = /** @class */ (function () {
         }
     };
     UnityModuleImpl.prototype.postMessage = function (gameObject, methodName, message) {
-        console.log("UUUUUUUUUU In UnityModuleImpl.postMessage, message: " + message);
+        //  console.log("UUUUUUUUUU In UnityModuleImpl.postMessage, message: " + message);
         UnityNativeModule.postMessage(gameObject, methodName, message);
     };
     UnityModuleImpl.prototype.pause = function () {
