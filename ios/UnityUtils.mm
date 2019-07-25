@@ -64,7 +64,7 @@ extern "C" void UnityPostMessage(NSString* gameObject, NSString* methodName, NSS
 
 extern "C" void UnityPauseCommand()
 {
-   //   NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityPauseCommand");
+      NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityPauseCommand");
     dispatch_async(dispatch_get_main_queue(), ^{
         UnityPause(1);
     });
@@ -72,7 +72,7 @@ extern "C" void UnityPauseCommand()
 
 extern "C" void UnityResumeCommand()
 {
-    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityResumeCommand");
+      NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityResumeCommand");
     dispatch_async(dispatch_get_main_queue(), ^{
         UnityPause(0);
     });
@@ -131,9 +131,9 @@ static BOOL _isUnityReady = NO;
 
 + (void)createPlayer:(void (^)(void))completed
 {
-    // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer");
+    NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer");
    if (_isUnityReady) {
-    // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer, unity is ready already so returning");
+     NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer, unity is ready already so returning");
         completed();
         return;
     }
@@ -146,20 +146,20 @@ static BOOL _isUnityReady = NO;
     }];
 
     if (UnityIsInited()) {
-    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is inited, returning");
+      NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is inited, returning");
        return;
     }
 
-     //   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited");
+        NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited");
   dispatch_async(dispatch_get_main_queue(), ^{
         UIApplication* application = [UIApplication sharedApplication];
 
         // Always keep RN window in top
         application.keyWindow.windowLevel = UIWindowLevelNormal + 1;
 
-      //   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, about to call InitUnity");
+         NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, about to call InitUnity");
        InitUnity();
-      //   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, called InitUnity");
+         NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, called InitUnity");
 
         UnityAppController *controller = GetAppController();
         [controller application:application didFinishLaunchingWithOptions:nil];
@@ -168,14 +168,14 @@ static BOOL _isUnityReady = NO;
         [UnityUtils listenAppState];
 
     // call completed callback
-   // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer called InitUnity async but calling completed() now");
+   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer called InitUnity async but calling completed() now");
     completed();
     });
 }
 
 extern "C" void onUnityMessage(const char* message)
 {
-   //  NSLog(@"UUUUUUUUUUUU In UnityUtils.onUnityMessage");
+     NSLog(@"UUUUUUUUUUUU In UnityUtils.onUnityMessage");
     for (id<UnityEventListener> listener in mUnityEventListeners) {
         [listener onMessage:[NSString stringWithUTF8String:message]];
     }
