@@ -22,24 +22,28 @@ RCT_EXPORT_MODULE(UnityView)
     if ([UnityUtils isUnityReady]) {
         NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.view, unity is ready so about to call setUnityView");
         [self.currentView setUnityView: [GetAppController() unityView]];
-    } else {
+         NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.view, unity is ready, called setUnityView");
+   } else {
         NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.view, unity is not ready so about to call createPlayer");
         [UnityUtils createPlayer:^{
            NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.view, in createPlayer callback, about to call setUnityView");
         [self.currentView setUnityView: [GetAppController() unityView]];
-        }];
+            NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.view, in createPlayer callback, called setUnityView");
+       }];
     }
     return self.currentView;
 }
 
 - (dispatch_queue_t)methodQueue
 {
+     NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.methodQueue");
     return dispatch_get_main_queue();
 }
 
 + (BOOL)requiresMainQueueSetup
 {
-    return YES;
+      NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.requiresMainQueueSetup");
+   return YES;
 }
 
 - (void)setBridge:(RCTBridge *)bridge {
@@ -55,12 +59,14 @@ RCT_EXPORT_METHOD(postMessage:(nonnull NSNumber *)reactTag gameObject:(NSString 
 
 RCT_EXPORT_METHOD(pause:(nonnull NSNumber *)reactTag)
 {
+     NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.pause, about to call UnityPauseCommand");
     UnityPauseCommand();
 }
 
 RCT_EXPORT_METHOD(resume:(nonnull NSNumber *)reactTag)
 {
-    UnityResumeCommand();
+      NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.resume, about to call UnityResumeCommand");
+   UnityResumeCommand();
 }
 
 @end
