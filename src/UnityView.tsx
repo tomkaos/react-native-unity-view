@@ -31,7 +31,7 @@ export default class UnityView extends React.Component<UnityViewProps> {
     }
 
     public componentWillMount() {
-       // console.log("UUUUUUUUUU In UnityView.componentWillMount, UnityModule: " + UnityModule);
+        console.log("UUUUUUUUUU In UnityView.componentWillMount");
         this.handle = UnityModule.addMessageListener(message => {
             if (this.props.onUnityMessage && message instanceof MessageHandler) {
                 this.props.onUnityMessage(message);
@@ -64,7 +64,7 @@ export default class UnityView extends React.Component<UnityViewProps> {
      * [Deprecated] Use `UnityModule.postMessage` instead.
      */
     public postMessage(gameObject: string, methodName: string, message: string) {
-       // console.log("UUUUUUUUUU In UnityView.postMessage, message: " + message);
+        console.log("UUUUUUUUUU In UnityView.postMessage, message: " + message);
         UnityModule.postMessage(gameObject, methodName, message);
     };
 
@@ -72,7 +72,7 @@ export default class UnityView extends React.Component<UnityViewProps> {
      * [Deprecated] Use `UnityModule.postMessageToUnityManager` instead.
      */
     public postMessageToUnityManager(message: string | UnityViewMessage) {
-        // console.log("UUUUUUUUUU In UnityView.postMessageToUnityManager, message: " + message);
+         console.log("UUUUUUUUUU In UnityView.postMessageToUnityManager, message: " + message);
         UnityModule.postMessageToUnityManager(message);
     };
 

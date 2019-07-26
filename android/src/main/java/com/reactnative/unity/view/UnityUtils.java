@@ -30,6 +30,7 @@ public class UnityUtils {
             new CopyOnWriteArraySet<>();
 
     public static UnityPlayer getPlayer() {
+        System.out.println("UUUUUUUUUUUU In UnityUtils.getPlayer");
         if (!_isUnityReady) {
             return null;
         }
@@ -45,7 +46,8 @@ public class UnityUtils {
     }
 
     public static void createPlayer(final Activity activity, final CreateCallback callback) {
-        if (unityPlayer != null) {
+         System.out.println("UUUUUUUUUUUU In UnityUtils.createPlayer");
+       if (unityPlayer != null) {
             callback.onReady();
             return;
         }
@@ -85,7 +87,8 @@ public class UnityUtils {
     }
 
     public static void postMessage(String gameObject, String methodName, String message) {
-        if (!_isUnityReady) {
+          System.out.println("UUUUUUUUUUUU In UnityUtils.postMessage, message: " + message);
+       if (!_isUnityReady) {
             return;
         }
         UnityPlayer.UnitySendMessage(gameObject, methodName, message);
@@ -109,6 +112,7 @@ public class UnityUtils {
      * Invoke by unity C#
      */
     public static void onUnityMessage(String message) {
+          System.out.println("UUUUUUUUUUUU In UnityUtils.onUnityMessage, message: " + message);
         for (UnityEventListener listener : mUnityEventListeners) {
             try {
                 listener.onMessage(message);
@@ -126,7 +130,8 @@ public class UnityUtils {
     }
 
     public static void addUnityViewToBackground() {
-        if (unityPlayer == null) {
+           System.out.println("UUUUUUUUUUUU In UnityUtils.addUnityViewToBackground");
+       if (unityPlayer == null) {
             return;
         }
         if (unityPlayer.getParent() != null) {
@@ -141,7 +146,8 @@ public class UnityUtils {
     }
 
     public static void addUnityViewToGroup(ViewGroup group) {
-        if (unityPlayer == null) {
+           System.out.println("UUUUUUUUUUUU In UnityUtils.addUnityViewToGroup");
+       if (unityPlayer == null) {
             return;
         }
         if (unityPlayer.getParent() != null) {
