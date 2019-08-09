@@ -32,7 +32,7 @@ extern "C" bool UnityIsInited()
 
 extern "C" void InitUnity()
 {
-    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.InitUnity");
+    NSLog(@"UUUUUUUUUUUU In UnityUtils.InitUnity");
     if (unity_inited) {
         return;
     }
@@ -64,7 +64,7 @@ extern "C" void UnityPostMessage(NSString* gameObject, NSString* methodName, NSS
 
 extern "C" void UnityPauseCommand()
 {
-   //   NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityPauseCommand");
+    NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityPauseCommand");
     dispatch_async(dispatch_get_main_queue(), ^{
         UnityPause(1);
     });
@@ -72,7 +72,7 @@ extern "C" void UnityPauseCommand()
 
 extern "C" void UnityResumeCommand()
 {
-    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityResumeCommand");
+    NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityResumeCommand");
     dispatch_async(dispatch_get_main_queue(), ^{
         UnityPause(0);
     });
@@ -90,7 +90,7 @@ static BOOL _isUnityReady = NO;
 
 + (void)handleAppStateDidChange:(NSNotification *)notification
 {
-    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.handleAppStateDidChange");
+    NSLog(@"UUUUUUUUUUUU In UnityUtils.handleAppStateDidChange");
     if (!_isUnityReady) {
         return;
     }
@@ -131,35 +131,35 @@ static BOOL _isUnityReady = NO;
 
 + (void)createPlayer:(void (^)(void))completed
 {
-    // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer");
+    NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer");
    if (_isUnityReady) {
-    // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer, unity is ready already so returning");
+    NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer, unity is ready already so returning");
         completed();
         return;
     }
 
-   //  NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer, unity is not ready, calling addObserverForName");
+   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer, unity is not ready, calling addObserverForName");
     [[NSNotificationCenter defaultCenter] addObserverForName:@"UnityReady" object:nil queue:[NSOperationQueue mainQueue]  usingBlock:^(NSNotification * _Nonnull note) {
-    // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer UnityReady callback, about to set UnityReady");
+    NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer UnityReady callback, about to set UnityReady");
         _isUnityReady = YES;
         completed();
     }];
 
     if (UnityIsInited()) {
-    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is inited, returning");
+    NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is inited, returning");
        return;
     }
 
-     //   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited");
+     NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited");
   dispatch_async(dispatch_get_main_queue(), ^{
         UIApplication* application = [UIApplication sharedApplication];
 
         // Always keep RN window in top
         application.keyWindow.windowLevel = UIWindowLevelNormal + 1;
 
-      //   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, about to call InitUnity");
+      NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, about to call InitUnity");
        InitUnity();
-      //   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, called InitUnity");
+      NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, called InitUnity");
 
         UnityAppController *controller = GetAppController();
         [controller application:application didFinishLaunchingWithOptions:nil];
@@ -168,14 +168,14 @@ static BOOL _isUnityReady = NO;
         [UnityUtils listenAppState];
 
     // call completed callback
-   // NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer called InitUnity async but calling completed() now");
+   NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer called InitUnity async but calling completed() now");
     completed();
     });
 }
 
 extern "C" void onUnityMessage(const char* message)
 {
-   //  NSLog(@"UUUUUUUUUUUU In UnityUtils.onUnityMessage");
+   NSLog(@"UUUUUUUUUUUU In UnityUtils.onUnityMessage");
     for (id<UnityEventListener> listener in mUnityEventListeners) {
         [listener onMessage:[NSString stringWithUTF8String:message]];
     }
@@ -183,7 +183,7 @@ extern "C" void onUnityMessage(const char* message)
 
 + (void)addUnityEventListener:(id<UnityEventListener>)listener
 {
-    //  NSLog(@"UUUUUUUUUUUU In UnityUtils.addUnityEventListener");
+    NSLog(@"UUUUUUUUUUUU In UnityUtils.addUnityEventListener");
    [mUnityEventListeners addObject:listener];
 }
 
