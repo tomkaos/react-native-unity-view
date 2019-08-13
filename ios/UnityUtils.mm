@@ -169,8 +169,9 @@ static BOOL _isUnityReady = NO;
     }];
 
     if (UnityIsInited()) {
-      NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is inited, returning");
-      // return;
+     NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is inited, returning");
+     completed();
+     return;
     }
 
         NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, about too call async block");
