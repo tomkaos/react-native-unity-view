@@ -19,7 +19,8 @@ public class UnityView extends FrameLayout {
     }
 
     public void setUnityPlayer(UnityPlayer player) {
-        this.view = player;
+         System.out.println("UUUUUUUUUUUU In UnityView.setUnityPlayer");
+       this.view = player;
         UnityUtils.addUnityViewToGroup(this);
     }
 
