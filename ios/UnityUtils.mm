@@ -161,6 +161,7 @@ static BOOL _isUnityReady = NO;
         return;
     }
 
+
     NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer, unity is not ready, calling addObserverForName");
     [[NSNotificationCenter defaultCenter] addObserverForName:@"UnityReady" object:nil queue:[NSOperationQueue mainQueue]  usingBlock:^(NSNotification * _Nonnull note) {
      NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer UnityReady callback, about to set UnityReady and call completed()");
@@ -185,7 +186,6 @@ static BOOL _isUnityReady = NO;
          NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, about to call InitUnity");
        InitUnity();
          NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer Unity is not inited, called InitUnity");
-
           NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer about to call GetAppController");
        UnityAppController *controller = GetAppController();
            NSLog(@"UUUUUUUUUUUU In UnityUtils.createPlayer about to call didFinishLaunchingWithOptions");
