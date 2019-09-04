@@ -1,5 +1,4 @@
 import { NativeModules } from 'react-native';
-import {UnityModule} from "./UnityModule";
 const { UnityNativeModule } = NativeModules;
 
 export const UnityMessagePrefix = '@UnityMessage@';
@@ -36,7 +35,6 @@ export default class MessageHandler {
     }
 
     public send(data: any) {
-        console.log("UUUUUUUUUU In MessageHandler.send");
         UnityNativeModule.postMessage('UnityMessageManager', 'onRNMessage', UnityMessagePrefix + JSON.stringify({
             id: this.id,
             seq: 'end',
