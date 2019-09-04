@@ -20,10 +20,10 @@ RCT_EXPORT_MODULE(UnityView)
     self.currentView = [[RNUnityView alloc] init];
     if ([UnityUtils isUnityReady]) {
         [self.currentView setUnityView: [GetAppController() unityView]];
-   } else {
+    } else {
         [UnityUtils createPlayer:^{
-        [self.currentView setUnityView: [GetAppController() unityView]];
-       }];
+            [self.currentView setUnityView: [GetAppController() unityView]];
+        }];
     }
     return self.currentView;
 }
@@ -35,11 +35,11 @@ RCT_EXPORT_MODULE(UnityView)
 
 + (BOOL)requiresMainQueueSetup
 {
-   return YES;
+    return YES;
 }
 
 - (void)setBridge:(RCTBridge *)bridge {
-   _bridge = bridge;
+    _bridge = bridge;
 }
 
 RCT_EXPORT_METHOD(postMessage:(nonnull NSNumber *)reactTag gameObject:(NSString *)gameObject methodName:(NSString *)methodName message:(NSString *)message)
@@ -54,7 +54,7 @@ RCT_EXPORT_METHOD(pause:(nonnull NSNumber *)reactTag)
 
 RCT_EXPORT_METHOD(resume:(nonnull NSNumber *)reactTag)
 {
-   UnityResumeCommand();
+    UnityResumeCommand();
 }
 
 @end

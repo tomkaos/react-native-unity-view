@@ -41,7 +41,7 @@ RCT_EXPORT_METHOD(isReady:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRe
 RCT_EXPORT_METHOD(createUnity:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     [UnityUtils createPlayer:^{
-       resolve(@(YES));
+        resolve(@(YES));
     }];
 }
 
@@ -57,7 +57,7 @@ RCT_EXPORT_METHOD(pause)
 
 RCT_EXPORT_METHOD(resume)
 {
-   UnityResumeCommand();
+    UnityResumeCommand();
 }
 
 - (void)onMessage:(NSString *)message {

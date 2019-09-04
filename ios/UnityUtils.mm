@@ -32,21 +32,21 @@ extern "C" bool UnityIsInited()
 extern "C" void InitUnity()
 {
     if (unity_inited) {
-       return;
+        return;
     }
     unity_inited = true;
 
     UnityInitStartupTime();
-
+    
     @autoreleasepool
     {
         UnityInitTrampoline();
         UnityInitRuntime(g_argc, g_argv);
-
+        
         RegisterMonoModules();
         NSLog(@"-> registered mono modules %p\n", &constsection);
         RegisterFeatures();
-
+        
         // iOS terminates open sockets when an application enters background mode.
         // The next write to any of such socket causes SIGPIPE signal being raised,
         // even if the request has been done from scripting side. This disables the
@@ -87,36 +87,36 @@ static BOOL _isUnityReady = NO;
 + (void)handleAppStateDidChange:(NSNotification *)notification
 {
     if (!_isUnityReady) {
-       return;
+        return;
     }
     UnityAppController* unityAppController = GetAppController();
-
+    
     UIApplication* application = [UIApplication sharedApplication];
-
+    
     if ([notification.name isEqualToString:UIApplicationWillResignActiveNotification]) {
         [unityAppController applicationWillResignActive:application];
     } else if ([notification.name isEqualToString:UIApplicationDidEnterBackgroundNotification]) {
-       [unityAppController applicationDidEnterBackground:application];
+        [unityAppController applicationDidEnterBackground:application];
     } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
         [unityAppController applicationWillEnterForeground:application];
     } else if ([notification.name isEqualToString:UIApplicationDidBecomeActiveNotification]) {
-       [unityAppController applicationDidBecomeActive:application];
+        [unityAppController applicationDidBecomeActive:application];
     } else if ([notification.name isEqualToString:UIApplicationWillTerminateNotification]) {
         [unityAppController applicationWillTerminate:application];
     } else if ([notification.name isEqualToString:UIApplicationDidReceiveMemoryWarningNotification]) {
-       [unityAppController applicationDidReceiveMemoryWarning:application];
+        [unityAppController applicationDidReceiveMemoryWarning:application];
     }
 }
 
 + (void)listenAppState
 {
-   for (NSString *name in @[UIApplicationDidBecomeActiveNotification,
+    for (NSString *name in @[UIApplicationDidBecomeActiveNotification,
                              UIApplicationDidEnterBackgroundNotification,
                              UIApplicationWillTerminateNotification,
                              UIApplicationWillResignActiveNotification,
                              UIApplicationWillEnterForegroundNotification,
                              UIApplicationDidReceiveMemoryWarningNotification]) {
-
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleAppStateDidChange:)
                                                      name:name
@@ -126,37 +126,36 @@ static BOOL _isUnityReady = NO;
 
 + (void)createPlayer:(void (^)(void))completed
 {
-   if (_isUnityReady) {
+    if (_isUnityReady) {
         completed();
         return;
     }
-
-
+    
     [[NSNotificationCenter defaultCenter] addObserverForName:@"UnityReady" object:nil queue:[NSOperationQueue mainQueue]  usingBlock:^(NSNotification * _Nonnull note) {
         _isUnityReady = YES;
         completed();
     }];
-
+    
     if (UnityIsInited()) {
-     completed();
-     return;
+        return;
     }
-
-  dispatch_async(dispatch_get_main_queue(), ^{
-       UIApplication* application = [UIApplication sharedApplication];
-
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIApplication* application = [UIApplication sharedApplication];
+        
         // Always keep RN window in top
         application.keyWindow.windowLevel = UIWindowLevelNormal + 1;
+        
+        InitUnity();
+        
+        UnityAppController *controller = GetAppController();
+        [controller application:application didFinishLaunchingWithOptions:nil];
+        [controller applicationDidBecomeActive:application];
+        
+        [UnityUtils listenAppState];
 
-       InitUnity();
-       UnityAppController *controller = GetAppController();
-       [controller application:application didFinishLaunchingWithOptions:nil];
-       [controller applicationDidBecomeActive:application];
-
-       [UnityUtils listenAppState];
-
-    // call completed callback
-       completed();
+        // call completed callback
+        completed();
     });
 }
 
@@ -169,7 +168,7 @@ extern "C" void onUnityMessage(const char* message)
 
 + (void)addUnityEventListener:(id<UnityEventListener>)listener
 {
-   [mUnityEventListeners addObject:listener];
+    [mUnityEventListeners addObject:listener];
 }
 
 + (void)removeUnityEventListener:(id<UnityEventListener>)listener
