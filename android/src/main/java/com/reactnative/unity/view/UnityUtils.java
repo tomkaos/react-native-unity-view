@@ -18,26 +18,39 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  */
 
 public class UnityUtils {
+    public interface CreateCallback {
+        void onReady();
+    }
+
     private static UnityPlayer unityPlayer;
+    private static boolean _isUnityReady;
+    private static boolean _isUnityPaused;
 
     private static final CopyOnWriteArraySet<UnityEventListener> mUnityEventListeners =
             new CopyOnWriteArraySet<>();
 
     public static UnityPlayer getPlayer() {
+        System.out.println("UUUUUUUUUUUU In UnityUtils.getPlayer");
+        if (!_isUnityReady) {
+            return null;
+        }
         return unityPlayer;
     }
 
-    public static boolean hasUnityPlayer() {
-        return unityPlayer != null;
+    public static boolean isUnityReady() {
+        return _isUnityReady;
     }
 
-    public static boolean isUnityPaused = false;
+    public static boolean isUnityPaused() {
+        return _isUnityPaused;
+    }
 
-    public static void createPlayer(Context context) {
-        if (unityPlayer != null) {
+    public static void createPlayer(final Activity activity, final CreateCallback callback) {
+         System.out.println("UUUUUUUUUUUU In UnityUtils.createPlayer");
+       if (unityPlayer != null) {
+            callback.onReady();
             return;
         }
-        final Activity activity = ((Activity)context);
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -67,27 +80,43 @@ public class UnityUtils {
                     activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
                     activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 }
+                _isUnityReady = true;
+                callback.onReady();
             }
         });
     }
 
     public static void postMessage(String gameObject, String methodName, String message) {
+          System.out.println("UUUUUUUUUUUU In UnityUtils.postMessage, message: " + message);
+       if (!_isUnityReady) {
+            return;
+        }
         UnityPlayer.UnitySendMessage(gameObject, methodName, message);
+    }
+
+    public static void pause() {
+        if (unityPlayer != null) {
+            unityPlayer.pause();
+            _isUnityPaused = true;
+        }
+    }
+
+    public static void resume() {
+        if (unityPlayer != null) {
+            unityPlayer.resume();
+            _isUnityPaused = false;
+        }
     }
 
     /**
      * Invoke by unity C#
      */
     public static void onUnityMessage(String message) {
-        if (message.contains("SELF_PAUSE")){
-            unityPlayer.pause();
-            isUnityPaused = false;
-        } else {
-            for (UnityEventListener listener : mUnityEventListeners) {
-                try {
-                    listener.onMessage(message);
-                } catch (Exception e) {
-                }
+          System.out.println("UUUUUUUUUUUU In UnityUtils.onUnityMessage, message: " + message);
+        for (UnityEventListener listener : mUnityEventListeners) {
+            try {
+                listener.onMessage(message);
+            } catch (Exception e) {
             }
         }
     }
@@ -101,6 +130,10 @@ public class UnityUtils {
     }
 
     public static void addUnityViewToBackground() {
+           System.out.println("UUUUUUUUUUUU In UnityUtils.addUnityViewToBackground");
+       if (unityPlayer == null) {
+            return;
+        }
         if (unityPlayer.getParent() != null) {
             ((ViewGroup)unityPlayer.getParent()).removeView(unityPlayer);
         }
@@ -113,13 +146,17 @@ public class UnityUtils {
     }
 
     public static void addUnityViewToGroup(ViewGroup group) {
+           System.out.println("UUUUUUUUUUUU In UnityUtils.addUnityViewToGroup");
+       if (unityPlayer == null) {
+            return;
+        }
         if (unityPlayer.getParent() != null) {
             ((ViewGroup)unityPlayer.getParent()).removeView(unityPlayer);
         }
-        group.addView(unityPlayer, MATCH_PARENT, MATCH_PARENT);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        group.addView(unityPlayer, 0, layoutParams);
         unityPlayer.windowFocusChanged(true);
         unityPlayer.requestFocus();
         unityPlayer.resume();
-        isUnityPaused = false;
     }
 }
