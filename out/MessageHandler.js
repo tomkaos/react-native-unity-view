@@ -28,6 +28,7 @@ var MessageHandler = /** @class */ (function () {
         }
     };
     MessageHandler.prototype.send = function (data) {
+        console.log("UUUUUUUUUU In MessageHandler.send");
         UnityNativeModule.postMessage('UnityMessageManager', 'onRNMessage', exports.UnityMessagePrefix + JSON.stringify({
             id: this.id,
             seq: 'end',

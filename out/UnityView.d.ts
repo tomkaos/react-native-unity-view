@@ -28,6 +28,10 @@ export default class UnityView extends React.Component<UnityViewProps> {
      */
     resume(): void;
     /**
+     * [Deprecated] Use `UnityModule.cleanup` instead.
+     */
+    cleanup(): void;
+    /**
      * [Deprecated] Use `UnityModule.postMessage` instead.
      */
     postMessage(gameObject: string, methodName: string, message: string): void;

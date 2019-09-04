@@ -18,6 +18,8 @@ void UnityPostMessage(NSString* gameObject, NSString* methodName, NSString* mess
 void UnityPauseCommand();
 
 void UnityResumeCommand();
+    
+void UnityCleanupCommand();
 
 #ifdef __cplusplus
 } // extern "C"

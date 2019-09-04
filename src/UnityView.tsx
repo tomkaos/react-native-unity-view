@@ -61,6 +61,13 @@ export default class UnityView extends React.Component<UnityViewProps> {
     };
 
     /**
+     * [Deprecated] Use `UnityModule.cleanup` instead.
+     */
+    public cleanup() {
+        UnityModule.cleanup();
+    };
+
+    /**
      * [Deprecated] Use `UnityModule.postMessage` instead.
      */
     public postMessage(gameObject: string, methodName: string, message: string) {

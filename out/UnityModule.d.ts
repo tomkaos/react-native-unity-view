@@ -34,6 +34,10 @@ export interface UnityModule {
      */
     resume(): void;
     /**
+     * Clean the unity player
+     */
+    cleanup(): void;
+    /**
      * Receive string and json message from unity.
      */
     addMessageListener(listener: (message: string | MessageHandler) => void): number;

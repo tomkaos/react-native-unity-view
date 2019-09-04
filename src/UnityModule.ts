@@ -39,6 +39,10 @@ export interface UnityModule {
      */
     resume(): void;
     /**
+     * Clean the unity player
+     */
+    cleanup(): void;
+    /**
      * Receive string and json message from unity.
      */
     addMessageListener(listener: (message: string | MessageHandler) => void): number;
@@ -161,9 +165,14 @@ class UnityModuleImpl implements UnityModule {
     }
 
     public resume() {
-        console.log("UUUUUUUUUU In UnityModuleImpl.pause");
+        console.log("UUUUUUUUUU In UnityModuleImpl.resume");
         UnityNativeModule.resume();
     }
+
+    public cleanup() {
+      console.log("UUUUUUUUUU In UnityModuleImpl.cleanup");
+      UnityNativeModule.cleanup();
+  }
 
     public addMessageListener(listener: (handler: string | MessageHandler) => void) {
         const id = this.getHandleId();

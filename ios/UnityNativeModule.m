@@ -72,6 +72,12 @@ RCT_EXPORT_METHOD(resume)
    UnityResumeCommand();
 }
 
+RCT_EXPORT_METHOD(cleanup)
+{
+    NSLog(@"UUUUUUUUUUUU In UnityNativeModule.cleanup");
+    UnityCleanupCommand();
+}
+
 - (void)onMessage:(NSString *)message {
      NSLog(@"UUUUUUUUUUUU In UnityNativeModule.onMessage %@", message);
 #pragma clang diagnostic push

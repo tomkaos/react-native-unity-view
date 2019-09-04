@@ -90,6 +90,14 @@ extern "C" void UnityResumeCommand()
     });
 }
 
+extern "C" void UnityCleanupCommand()
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"UUUUUUUUUUUU In UnityUtils.UnityCleanupCommand, in async callback, about to call UnityCleanup");
+        UnityCleanup();
+    });
+}
+
 @implementation UnityUtils
 
 static NSHashTable* mUnityEventListeners = [NSHashTable weakObjectsHashTable];

@@ -69,4 +69,10 @@ RCT_EXPORT_METHOD(resume:(nonnull NSNumber *)reactTag)
    UnityResumeCommand();
 }
 
+RCT_EXPORT_METHOD(cleanup)
+{
+    NSLog(@"UUUUUUUUUUUU In RNUnityViewManager.clean, about to call UnityCleanupCommand");
+    UnityCleanupCommand();
+}
+
 @end
