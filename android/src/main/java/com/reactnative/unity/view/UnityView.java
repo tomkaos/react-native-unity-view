@@ -11,7 +11,7 @@ import com.unity3d.player.UnityPlayer;
  */
 
 public class UnityView extends FrameLayout {
-  
+
     private UnityPlayer view;
 
     protected UnityView(Context context) {

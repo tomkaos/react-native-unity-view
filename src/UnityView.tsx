@@ -8,12 +8,12 @@ import { UnityModule, UnityViewMessage } from "./UnityModule";
 const { UIManager } = NativeModules;
 
 export interface UnityViewProps extends ViewProperties {
-    /**
-     * Receive string message from unity.
+    /** 
+     * Receive string message from unity. 
      */
     onMessage?: (message: string) => void;
-    /**
-     * Receive unity message from unity.
+    /** 
+     * Receive unity message from unity. 
      */
     onUnityMessage?: (handler: MessageHandler) => void;
 }
