@@ -36,7 +36,7 @@ extern "C" void InitUnity()
     }
     unity_inited = true;
 
-    UnityInitStartupTime();
+    // UnityInitStartupTime();
     
     @autoreleasepool
     {
