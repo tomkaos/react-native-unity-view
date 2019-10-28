@@ -39,7 +39,7 @@ var UnityView = /** @class */ (function (_super) {
     function UnityView(props) {
         return _super.call(this, props) || this;
     }
-    UnityView.prototype.componentDidMount = function () {
+    UnityView.prototype.UNSAFE_componentWillMount = function () {
         var _this = this;
         // console.log("UUUUUUUUUU In UnityView.componentWillMount, UnityModule: " + UnityModule);
         this.handle = UnityModule_1.UnityModule.addMessageListener(function (message) {
