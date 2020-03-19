@@ -247,11 +247,14 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../react-native/React/**",
+					"\"${SRCROOT}/../../../ios/Pods/Headers/Public\"/**",
 					"$(SRCROOT)/../../../ios/UnityExport/Classes",
 					"$(SRCROOT)/../../../ios/UnityExport/Classes/Unity",
 					"$(SRCROOT)/../../../ios/UnityExport/Libraries",
+					"$(SRCROOT)/../../../ios/UnityExport/Libraries/libil2cpp/include",
+					"$(SRCROOT)/../../../ios/UnityExport/Classes/Native",
 				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libraries";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -264,11 +267,14 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../react-native/React/**",
+					"\"${SRCROOT}/../../../ios/Pods/Headers/Public\"/**",
 					"$(SRCROOT)/../../../ios/UnityExport/Classes",
 					"$(SRCROOT)/../../../ios/UnityExport/Classes/Unity",
 					"$(SRCROOT)/../../../ios/UnityExport/Libraries",
+					"$(SRCROOT)/../../../ios/UnityExport/Libraries/libil2cpp/include",
+					"$(SRCROOT)/../../../ios/UnityExport/Classes/Native",
 				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libraries";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

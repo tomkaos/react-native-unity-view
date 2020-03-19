@@ -153,9 +153,6 @@ static BOOL _isUnityReady = NO;
         [controller applicationDidBecomeActive:application];
         
         [UnityUtils listenAppState];
-
-        // call completed callback
-        completed();
     });
 }
 
